@@ -4,6 +4,7 @@ import org.orekit.data.DataContext
 import org.orekit.data.DirectoryCrawler
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.util.ResourceUtils
 import java.io.File
 import java.util.*
 import javax.annotation.PostConstruct
@@ -22,7 +23,7 @@ class CoordinatesApplication {
             Locale.setDefault(Locale.ENGLISH)
             TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
             println("Loading OrekitData")
-            val orekitData = File("./orekit-data")
+            val orekitData = ResourceUtils.getFile("classpath:orekit-data")
             if (!orekitData.exists()) {
                 exitProcess(1)
             }

@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.7.3"
     id("io.spring.dependency-management") version "1.0.13.RELEASE"
+    id("org.siouan.frontend-jdk11") version "6.0.0"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
 }
@@ -37,4 +38,17 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+frontend {
+    nodeVersion.set("16.14.2")
+    packageJsonDirectory.set(File("src/frontend"))
+    assembleScript.set("build")
+    yarnEnabled.set(true)
+    yarnVersion.set("1.22.15")
+}
+
+tasks.register<Copy>("copyFrontend") {
+    from(layout.projectDirectory.dir("src/frontend/dist"))
+    into(layout.projectDirectory.dir("src/main/resources/static"))
 }
